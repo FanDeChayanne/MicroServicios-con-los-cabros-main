@@ -22,7 +22,7 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+// Test
     private String Rut;
     private String nombre;
     private String apellido;
