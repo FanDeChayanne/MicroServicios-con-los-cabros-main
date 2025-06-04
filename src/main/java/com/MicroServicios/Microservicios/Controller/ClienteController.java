@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.MicroServicios.Microservicios.Model.Cliente;
 import com.MicroServicios.Microservicios.Repository.ClienteRepository;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RestController
 //Define la ruta base o especifica para un controlador o metodo 
 @RequestMapping("/api/cliente")
+
+@Tag (name = "Clientes", description = "Administracion de usuarios")
 public class ClienteController {
 
     //Le dice a spring que inyecte automaticamente una instancia de una clase(repositorio)

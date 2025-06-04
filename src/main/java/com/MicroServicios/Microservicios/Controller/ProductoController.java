@@ -13,8 +13,12 @@ import com.MicroServicios.Microservicios.Model.Producto;
 import com.MicroServicios.Microservicios.Repository.CarritoRepository;
 import com.MicroServicios.Microservicios.Repository.ProductoRepository;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/producto")
+
+@Tag (name = "Productos", description = "Administracion de productos")
 public class ProductoController {
     
 

@@ -3,6 +3,8 @@ package com.MicroServicios.Microservicios.Controller;
 import com.MicroServicios.Microservicios.Model.Tienda;
 import com.MicroServicios.Microservicios.Repository.TiendaRepository;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +12,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tienda")
+
+@Tag (name = "Tiendas", description = "Administracion de tiendas")
 public class TiendaController {
 
     @Autowired

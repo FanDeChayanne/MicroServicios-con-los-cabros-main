@@ -13,8 +13,12 @@ import com.MicroServicios.Microservicios.Model.Cliente;
 import com.MicroServicios.Microservicios.Repository.CarritoRepository;
 import com.MicroServicios.Microservicios.Repository.ClienteRepository;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/carrito")
+
+@Tag (name = "Carrito", description = "Administracion de carrito")
 public class CarritoController {
 
     @Autowired

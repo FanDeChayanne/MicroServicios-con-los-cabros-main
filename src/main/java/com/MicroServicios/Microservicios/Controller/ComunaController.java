@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.MicroServicios.Microservicios.Model.Cliente;
 import com.MicroServicios.Microservicios.Model.Comuna;
 import com.MicroServicios.Microservicios.Repository.ClienteRepository;
-import com.MicroServicios.Microservicios.Repository.ComunaRepository;   
+import com.MicroServicios.Microservicios.Repository.ComunaRepository;
+
+import io.swagger.v3.oas.annotations.tags.Tag;   
 
 @RestController
 @RequestMapping("/api/comuna")
+
+@Tag (name = "Comunas", description = "Administracion de comunas")
 public class ComunaController {
 
     @Autowired

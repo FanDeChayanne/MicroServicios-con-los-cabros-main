@@ -6,10 +6,15 @@ import org.springframework.web.bind.annotation.*;
 import com.MicroServicios.Microservicios.Model.Venta;
 import com.MicroServicios.Microservicios.Model.Carrito;
 import com.MicroServicios.Microservicios.Repository.VentaRepository;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import com.MicroServicios.Microservicios.Repository.CarritoRepository;
 
 @RestController
 @RequestMapping("/api/venta")
+
+@Tag (name = "Ventas", description = "Administracion de ventas")
 public class VentaController {
 
     @Autowired

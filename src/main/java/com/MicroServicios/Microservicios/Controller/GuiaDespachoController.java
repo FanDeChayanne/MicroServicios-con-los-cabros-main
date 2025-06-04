@@ -7,8 +7,12 @@ import com.MicroServicios.Microservicios.Model.Transportista;
 import com.MicroServicios.Microservicios.Repository.GuiaDespachoRepository;
 import com.MicroServicios.Microservicios.Repository.TransportistaRepository;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/guia")
+
+@Tag (name = "Guia de despacho", description = "Administracion de guias de despacho")
 public class GuiaDespachoController {
 
     @Autowired

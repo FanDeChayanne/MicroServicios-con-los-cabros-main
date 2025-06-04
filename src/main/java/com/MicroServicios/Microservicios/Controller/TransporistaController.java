@@ -15,9 +15,13 @@ import com.MicroServicios.Microservicios.Model.Transportista;
 import com.MicroServicios.Microservicios.Repository.TiendaRepository;
 import com.MicroServicios.Microservicios.Repository.TransportistaRepository;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 
 @RestController
 @RequestMapping("/api/transportista")
+
+@Tag (name = "Transportistas", description = "Administracion de transportistas")
 public class TransporistaController {
     
     @Autowired

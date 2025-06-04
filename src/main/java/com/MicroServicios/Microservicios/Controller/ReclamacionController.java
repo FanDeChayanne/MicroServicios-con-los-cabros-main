@@ -6,10 +6,14 @@ import org.springframework.web.bind.annotation.*;
 import com.MicroServicios.Microservicios.Model.Reclamacion;
 import com.MicroServicios.Microservicios.Repository.ReclamacionRepository;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/reclamaciones")
+
+@Tag (name = "Reclamaciones", description = "Administracion de reclamaciones")
 public class ReclamacionController {
 
     @Autowired
