@@ -7,11 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.MicroServicios.Microservicios.Model.Cliente;
+import com.MicroServicios.Microservicios.Repository.ClienteRepository;
 
 
-import com.example.demo.model.User;
-import com.example.demo.repository.UserRepository;
+
+
 
 // evitar el cambio de datos de las tablas (JUNIT)
 @DataJpaTest
@@ -34,9 +35,9 @@ public class ClienteTest{
         cli.setEdad(23);
         cli.setDireccion("Puente Gabriela Carrero 8");
         cli.setFechaRegistro("20-05-2024");
-        cli.setActive(false);
+        cli.setActivo(false);
 
-        Clienterepository.save(cli);
+        clienterepository.save(cli);
     }
 
     @Test
@@ -48,7 +49,7 @@ public class ClienteTest{
 
     @Test
     void testEliminar(){
-        Cliente cli = clienterepository.findById(2L).orElse();
+        Cliente cli = clienterepository.findById(2L).orElse(null);
         assert(cli!=null);
         if (cli!=null) {
             clienterepository.delete(cli);

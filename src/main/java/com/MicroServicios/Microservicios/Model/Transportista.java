@@ -51,6 +51,7 @@ public class Transportista {
     @JsonBackReference
     private Tienda tienda;
    
+   
 
     // relacion con Guia Despacho
     @OneToMany(mappedBy = "transportista", cascade = CascadeType.ALL)
