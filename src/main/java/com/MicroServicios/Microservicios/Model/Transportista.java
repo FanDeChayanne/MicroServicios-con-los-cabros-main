@@ -34,6 +34,9 @@ public class Transportista {
     private String celular;
     private String direccion;
 
+    private String permisosAcesso;
+    private Boolean usuarioHabilitado;
+
 
     // relacion con vehiculo
     @OneToOne
