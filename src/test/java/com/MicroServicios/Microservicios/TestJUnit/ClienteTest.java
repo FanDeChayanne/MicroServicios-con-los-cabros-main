@@ -16,7 +16,7 @@ import com.MicroServicios.Microservicios.Repository.ClienteRepository;
 
 // evitar el cambio de datos de las tablas (JUNIT)
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.replace.NONE)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class ClienteTest{
 
     @Autowired
@@ -46,7 +46,7 @@ public class ClienteTest{
         boolean encontro = lista.stream().anyMatch(u->"Joao".equals(u.getNombre()));
         assert(encontro);
     }
-
+    // antes de testear, generar en la BD real un cliente con id y nombre correspondiente para verificar 
     @Test
     void testEliminar(){
         Cliente cli = clienterepository.findById(2L).orElse(null);
