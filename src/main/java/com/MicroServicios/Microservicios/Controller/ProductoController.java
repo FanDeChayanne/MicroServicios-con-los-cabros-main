@@ -43,6 +43,21 @@ public class ProductoController {
         return p;
     }
 
+    // ResponseEntity es una clase propia de spring, puede devolver un objeto, codigo de estado y headers
+    // el <?> permite que se devuelva cualquier tipo de objeto
+
+    @GetMapping("/buscar/{nombre}")
+    public ResponseEntity<?> buscarPorNombre(@PathVariable String nombre) {
+        List<Producto> resultados = productoRepository.findByNombreContainingIgnoreCase(nombre);
+        if (resultados.isEmpty()) {
+            return ResponseEntity
+            .status(404)
+            .body("No se encontraron productos que coincidan con: " + nombre);
+        }
+        return ResponseEntity.ok(resultados);
+    }
+
+
     @DeleteMapping("/borrar/{id}")
     public void deleteProducto(@PathVariable Long id ) { 
         productoRepository.deleteById(id);
