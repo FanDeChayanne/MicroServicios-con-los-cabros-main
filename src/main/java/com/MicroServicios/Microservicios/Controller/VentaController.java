@@ -34,4 +34,11 @@ public class VentaController {
         ventaRepository.deleteById(id);
     }
 
+    private EntityModel<Venta> toModel(Venta venta) {
+    return EntityModel.of(
+        venta,
+        linkTo(methodOn(VentaController.class).deleteVenta(venta.getId())).withRel("borrar")
+    );
+}
+
 }
