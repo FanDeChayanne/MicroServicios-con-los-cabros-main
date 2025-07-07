@@ -41,4 +41,11 @@ public class TiendaController {
         return tiendaRepository.findAll();
     }
 
+    private EntityModel<Tienda> toModel(Tienda tienda) {
+    return EntityModel.of(
+        tienda,
+        linkTo(methodOn(TiendaController.class).putTienda(tienda, tienda.getId())).withRel("modificar"),
+        linkTo(methodOn(TiendaController.class).listarTiendas()).withRel("listar")
+    );
+}
 }
