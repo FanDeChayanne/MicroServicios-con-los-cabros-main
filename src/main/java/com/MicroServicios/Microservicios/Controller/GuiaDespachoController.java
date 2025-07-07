@@ -27,4 +27,11 @@ public class GuiaDespachoController {
         return guiaRepository.save(guia);
     }
 
+    private EntityModel<GuiaDespacho> toModel(GuiaDespacho guia) {
+    return EntityModel.of(
+        guia
+        // No se agregan links porque solo hay un método de grabar
+    );
+}
+
 }
