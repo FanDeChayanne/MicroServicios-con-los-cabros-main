@@ -73,10 +73,9 @@ public class ClienteController {
     private EntityModel<Cliente> toModel(Cliente cliente) {
     return EntityModel.of(
         cliente,
-        linkTo(methodOn(ClienteController.class).obtenerClientePorId(cliente.getId())).withSelfRel(),
-        linkTo(methodOn(ClienteController.class).actualizarCliente(cliente.getId(), cliente)).withRel("actualizar"),
-        linkTo(methodOn(ClienteController.class).eliminarCliente(cliente.getId())).withRel("eliminar"),
-        linkTo(methodOn(ClienteController.class).listarClientes()).withRel("clientes")
+        linkTo(methodOn(ClienteController.class).putCliente(cliente, cliente.getId())).withRel("modificar"),
+        linkTo(methodOn(ClienteController.class).deleteCliente(cliente.getId())).withRel("borrar"),
+        linkTo(methodOn(ClienteController.class).getClientes()).withRel("listar")
     );
 }
     
