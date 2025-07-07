@@ -52,5 +52,12 @@ public class CarritoController {
         carritoRepository.save(carritoExistente);
         return carritoExistente;
     }
+  private EntityModel<Carrito> toModel(Carrito carrito) {
+    return EntityModel.of(
+        carrito
+        // No se agregan links porque no hay métodos de obtener, eliminar ni listar carritos
+    );
+}
+}
 
 }
