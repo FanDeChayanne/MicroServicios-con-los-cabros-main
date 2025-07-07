@@ -62,5 +62,11 @@ public class ProductoController {
     public void deleteProducto(@PathVariable Long id ) { 
         productoRepository.deleteById(id);
     }    
+    private EntityModel<Producto> toModel(Producto producto) {
+    return EntityModel.of(
+        producto,
+        linkTo(methodOn(ProductoController.class).deleteProducto(producto.getId())).withRel("borrar")
+    );
+}
     
 }
