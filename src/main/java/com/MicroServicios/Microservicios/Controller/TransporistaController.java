@@ -41,4 +41,11 @@ public class TransporistaController {
         tra.setTienda(tienda);
         return transportistaRepository.save(tra);
     } 
+
+    private EntityModel<Transportista> toModel(Transportista transportista) {
+    return EntityModel.of(
+        transportista,
+        linkTo(methodOn(TransporistaController.class).getTransportistas()).withRel("listar")
+    );
+}
 }
