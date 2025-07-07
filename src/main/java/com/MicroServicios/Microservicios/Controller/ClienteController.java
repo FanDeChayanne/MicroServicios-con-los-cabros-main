@@ -70,5 +70,14 @@ public class ClienteController {
     public List<Cliente> getClientes() {
         return clienteRepository.findAll();
     }
+    private EntityModel<Cliente> toModel(Cliente cliente) {
+    return EntityModel.of(
+        cliente,
+        linkTo(methodOn(ClienteController.class).obtenerClientePorId(cliente.getId())).withSelfRel(),
+        linkTo(methodOn(ClienteController.class).actualizarCliente(cliente.getId(), cliente)).withRel("actualizar"),
+        linkTo(methodOn(ClienteController.class).eliminarCliente(cliente.getId())).withRel("eliminar"),
+        linkTo(methodOn(ClienteController.class).listarClientes()).withRel("clientes")
+    );
+}
     
 }
