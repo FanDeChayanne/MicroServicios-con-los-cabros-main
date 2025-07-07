@@ -50,4 +50,13 @@ public class ReclamacionController {
     public void deleteReclamacion(@PathVariable Long id) {
         reclamacionRepository.deleteById(id);
     }
+    
+    private EntityModel<Reclamacion> toModel(Reclamacion reclamacion) {
+    return EntityModel.of(
+        reclamacion,
+        linkTo(methodOn(ReclamacionController.class).putReclamacion(reclamacion, reclamacion.getId())).withRel("modificar"),
+        linkTo(methodOn(ReclamacionController.class).deleteReclamacion(reclamacion.getId())).withRel("borrar"),
+        linkTo(methodOn(ReclamacionController.class).listarReclamaciones()).withRel("listar")
+    );
+}
 }
