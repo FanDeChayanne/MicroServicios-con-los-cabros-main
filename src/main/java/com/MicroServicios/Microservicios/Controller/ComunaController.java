@@ -47,5 +47,12 @@ public class ComunaController {
     public List<Comuna> getComunas() {
         return comunaRepository.findAll();
     } 
+
+    private EntityModel<Comuna> toModel(Comuna comuna) {
+    return EntityModel.of(
+        comuna,
+        linkTo(methodOn(ComunaController.class).getComunas()).withRel("listar")
+    );
+}
     
 }
