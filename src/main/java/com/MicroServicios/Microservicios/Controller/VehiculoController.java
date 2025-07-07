@@ -40,5 +40,12 @@ public class VehiculoController {
         tra.setVehiculo(v);
         return transportistaRepository.save(tra);
     }
+
+    private EntityModel<Transportista> toModel(Transportista transportista) {
+    return EntityModel.of(
+        transportista
+        // No se agregan links porque solo hay un método de grabar
+    );
+}
     
 }
