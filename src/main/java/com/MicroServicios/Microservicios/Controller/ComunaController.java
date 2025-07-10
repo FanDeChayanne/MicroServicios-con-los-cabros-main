@@ -16,6 +16,10 @@ import com.MicroServicios.Microservicios.Model.Comuna;
 import com.MicroServicios.Microservicios.Repository.ClienteRepository;
 import com.MicroServicios.Microservicios.Repository.ComunaRepository;
 
+
+import org.springframework.hateoas.EntityModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import io.swagger.v3.oas.annotations.tags.Tag;   
 
 @RestController
@@ -44,9 +48,11 @@ public class ComunaController {
     }
 
     @GetMapping("/listar")
-    public List<Comuna> getComunas() {
-        return comunaRepository.findAll();
-    } 
+    public List<EntityModel<Comuna>> getComunas() {
+        return comunaRepository.findAll().stream()
+                .map(this::toModel)
+                .toList();
+    }
 
     private EntityModel<Comuna> toModel(Comuna comuna) {
     return EntityModel.of(

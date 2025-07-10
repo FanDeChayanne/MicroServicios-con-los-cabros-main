@@ -3,6 +3,9 @@ package com.MicroServicios.Microservicios.Controller;
 import com.MicroServicios.Microservicios.Model.Tienda;
 import com.MicroServicios.Microservicios.Repository.TiendaRepository;
 
+import org.springframework.hateoas.EntityModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,15 +40,17 @@ public class TiendaController {
     }
     
     @GetMapping("/listar")
-    public List<Tienda> listarTiendas() {
-        return tiendaRepository.findAll();
+    public List<EntityModel<Tienda>> listarTiendas() {
+        return tiendaRepository.findAll().stream()
+                .map(this::toModel)
+                .toList();
     }
 
     private EntityModel<Tienda> toModel(Tienda tienda) {
-    return EntityModel.of(
-        tienda,
-        linkTo(methodOn(TiendaController.class).putTienda(tienda, tienda.getId())).withRel("modificar"),
-        linkTo(methodOn(TiendaController.class).listarTiendas()).withRel("listar")
-    );
-}
+        return EntityModel.of(
+            tienda,
+            linkTo(methodOn(TiendaController.class).putTienda(tienda, tienda.getId())).withRel("modificar"),
+            linkTo(methodOn(TiendaController.class).listarTiendas()).withRel("listar")
+        );
+    }
 }

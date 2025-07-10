@@ -6,6 +6,10 @@ import org.springframework.web.bind.annotation.*;
 import com.MicroServicios.Microservicios.Model.Reclamacion;
 import com.MicroServicios.Microservicios.Repository.ReclamacionRepository;
 
+
+import org.springframework.hateoas.EntityModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
@@ -51,12 +55,20 @@ public class ReclamacionController {
         reclamacionRepository.deleteById(id);
     }
     
+    // Listar reclamaciones usando HATEOAS con EntityModel
+    @GetMapping("/listar")
+    public List<EntityModel<Reclamacion>> listarReclamacionesHateoas() {
+        return reclamacionRepository.findAll().stream()
+                .map(this::toModel)
+                .toList();
+    }
+    
     private EntityModel<Reclamacion> toModel(Reclamacion reclamacion) {
-    return EntityModel.of(
-        reclamacion,
-        linkTo(methodOn(ReclamacionController.class).putReclamacion(reclamacion, reclamacion.getId())).withRel("modificar"),
-        linkTo(methodOn(ReclamacionController.class).deleteReclamacion(reclamacion.getId())).withRel("borrar"),
-        linkTo(methodOn(ReclamacionController.class).listarReclamaciones()).withRel("listar")
-    );
-}
+        return EntityModel.of(
+            reclamacion,
+            linkTo(methodOn(ReclamacionController.class).putReclamacion(reclamacion, reclamacion.getId())).withRel("modificar"),
+            // No se agrega link de borrar porque deleteReclamacion es void y no es compatible con HATEOAS
+            linkTo(methodOn(ReclamacionController.class).listarReclamaciones()).withRel("listar")
+        );
+    }
 }

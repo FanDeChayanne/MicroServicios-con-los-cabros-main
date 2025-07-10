@@ -1,5 +1,6 @@
 package com.MicroServicios.Microservicios.Controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,11 +8,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
+import java.util.List;
 
 import com.MicroServicios.Microservicios.Model.Carrito;
 import com.MicroServicios.Microservicios.Model.Producto;
 import com.MicroServicios.Microservicios.Repository.CarritoRepository;
 import com.MicroServicios.Microservicios.Repository.ProductoRepository;
+
+
+import org.springframework.hateoas.EntityModel;
+// import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*; // No se usa actualmente
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -63,10 +71,16 @@ public class ProductoController {
         productoRepository.deleteById(id);
     }    
     private EntityModel<Producto> toModel(Producto producto) {
-    return EntityModel.of(
-        producto,
-        linkTo(methodOn(ProductoController.class).deleteProducto(producto.getId())).withRel("borrar")
-    );
-}
+        return EntityModel.of(
+            producto
+            // No se agregan links porque deleteProducto es void y no es compatible con HATEOAS
+        );
+    }
     
+    @GetMapping("/listar")
+    public List<EntityModel<Producto>> listarProductos() {
+        return productoRepository.findAll().stream()
+                .map(this::toModel)
+                .toList();
+    }
 }

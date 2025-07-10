@@ -5,6 +5,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.MicroServicios.Microservicios.Model.Cliente;
 import com.MicroServicios.Microservicios.Repository.ClienteRepository;
 
+
+import org.springframework.hateoas.EntityModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
@@ -53,7 +57,7 @@ public class ClienteController {
             cliente.setDireccion(cli.getDireccion());
             cliente.setFechaRegistro(cli.getFechaRegistro());
             cliente.setActivo(cli.isActivo());
-            return clienteRepository.save(cli);
+            return clienteRepository.save(cliente);
         }).orElseThrow(() -> new RuntimeException("No se encuentra un Cliente con el id: "+ id));
     }
     
@@ -67,16 +71,18 @@ public class ClienteController {
 
     // Listar Clientes
     @GetMapping("/listar")
-    public List<Cliente> getClientes() {
-        return clienteRepository.findAll();
+    public List<EntityModel<Cliente>> getClientes() {
+        return clienteRepository.findAll().stream()
+                .map(this::toModel)
+                .toList();
     }
     private EntityModel<Cliente> toModel(Cliente cliente) {
-    return EntityModel.of(
-        cliente,
-        linkTo(methodOn(ClienteController.class).putCliente(cliente, cliente.getId())).withRel("modificar"),
-        linkTo(methodOn(ClienteController.class).deleteCliente(cliente.getId())).withRel("borrar"),
-        linkTo(methodOn(ClienteController.class).getClientes()).withRel("listar")
-    );
-}
+        return EntityModel.of(
+            cliente,
+            linkTo(methodOn(ClienteController.class).putCliente(cliente, cliente.getId())).withRel("modificar"),
+            // Eliminar el link de borrar porque deleteCliente es void y no es compatible con HATEOAS
+            linkTo(methodOn(ClienteController.class).getClientes()).withRel("listar")
+        );
+    }
     
 }

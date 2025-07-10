@@ -7,6 +7,9 @@ import com.MicroServicios.Microservicios.Model.Transportista;
 import com.MicroServicios.Microservicios.Repository.GuiaDespachoRepository;
 import com.MicroServicios.Microservicios.Repository.TransportistaRepository;
 
+
+import org.springframework.hateoas.EntityModel;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -21,10 +24,11 @@ public class GuiaDespachoController {
     private TransportistaRepository transportistaRepository;
 
     @PostMapping("/grabar/{id}")
-    public GuiaDespacho grabarGuia(@RequestBody GuiaDespacho guia, @PathVariable Long id) {
+    public EntityModel<GuiaDespacho> grabarGuia(@RequestBody GuiaDespacho guia, @PathVariable Long id) {
         Transportista t = transportistaRepository.findById(id).orElse(null);
         guia.setTransportista(t);
-        return guiaRepository.save(guia);
+        GuiaDespacho saved = guiaRepository.save(guia);
+        return toModel(saved);
     }
 
     private EntityModel<GuiaDespacho> toModel(GuiaDespacho guia) {

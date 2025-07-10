@@ -7,9 +7,15 @@ import com.MicroServicios.Microservicios.Model.Venta;
 import com.MicroServicios.Microservicios.Model.Carrito;
 import com.MicroServicios.Microservicios.Repository.VentaRepository;
 
+
+import org.springframework.hateoas.EntityModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import com.MicroServicios.Microservicios.Repository.CarritoRepository;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/venta")
@@ -34,11 +40,18 @@ public class VentaController {
         ventaRepository.deleteById(id);
     }
 
+    @GetMapping("/listar")
+    public List<EntityModel<Venta>> listarVentas() {
+        return ventaRepository.findAll().stream()
+                .map(this::toModel)
+                .toList();
+    }
+
     private EntityModel<Venta> toModel(Venta venta) {
-    return EntityModel.of(
-        venta,
-        linkTo(methodOn(VentaController.class).deleteVenta(venta.getId())).withRel("borrar")
-    );
-}
+        return EntityModel.of(
+            venta,
+            linkTo(methodOn(VentaController.class).listarVentas()).withRel("listar")
+        );
+    }
 
 }

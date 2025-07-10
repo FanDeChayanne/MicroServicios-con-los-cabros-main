@@ -15,6 +15,10 @@ import com.MicroServicios.Microservicios.Model.Transportista;
 import com.MicroServicios.Microservicios.Repository.TiendaRepository;
 import com.MicroServicios.Microservicios.Repository.TransportistaRepository;
 
+
+import org.springframework.hateoas.EntityModel;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 
@@ -30,8 +34,10 @@ public class TransporistaController {
     private TiendaRepository tiendaRepository;
     
     @GetMapping("/listar")
-    public List<Transportista> getTransportistas() {
-        return transportistaRepository.findAll();
+    public List<EntityModel<Transportista>> getTransportistas() {
+        return transportistaRepository.findAll().stream()
+                .map(this::toModel)
+                .toList();
     }
     
 

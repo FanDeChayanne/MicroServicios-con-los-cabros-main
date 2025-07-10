@@ -1,6 +1,7 @@
 package com.MicroServicios.Microservicios.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -13,7 +14,13 @@ import com.MicroServicios.Microservicios.Model.Cliente;
 import com.MicroServicios.Microservicios.Repository.CarritoRepository;
 import com.MicroServicios.Microservicios.Repository.ClienteRepository;
 
+
+import org.springframework.hateoas.EntityModel;
+// import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*; // No se usa actualmente
+
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/carrito")
@@ -52,6 +59,12 @@ public class CarritoController {
         carritoRepository.save(carritoExistente);
         return carritoExistente;
     }
+    @GetMapping("/listar")
+    public List<EntityModel<Carrito>> listarCarritos() {
+        return carritoRepository.findAll().stream()
+                .map(this::toModel)
+                .toList();
+    }
   private EntityModel<Carrito> toModel(Carrito carrito) {
     return EntityModel.of(
         carrito
@@ -60,4 +73,4 @@ public class CarritoController {
 }
 }
 
-}
+
